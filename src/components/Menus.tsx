@@ -121,7 +121,7 @@ const Button = ({ children, icon, onClick, ...props }: ButtonProps) => {
   return (
     <li>
       <button
-        className="boder-0 delay-50 [&>svg]:delay-50 flex w-full items-center gap-4 bg-none px-6 py-3 text-sm transition-all hover:bg-gray-50 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-gray-400 [&>svg]:transition-all"
+        className="boder-0 delay-50 [&>svg]:delay-50 flex w-full items-center gap-4 bg-none px-6 py-3 text-sm transition-all hover:bg-gray-300 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-gray-400 [&>svg]:transition-all"
         onClick={handleClick}
         {...props}
       >

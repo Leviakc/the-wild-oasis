@@ -10,6 +10,7 @@ const headingVariants = cva("leading-normal", {
       h1: "text-3xl font-semibold",
       h2: "text-xl font-semibold",
       h3: "text-xl font-medium",
+      h4: "text-2xl font-semibold",
     },
   },
   defaultVariants: {
@@ -27,6 +28,7 @@ const elementVariant = {
   h1: "h1",
   h2: "h2",
   h3: "h3",
+  h4: "h4",
 };
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(

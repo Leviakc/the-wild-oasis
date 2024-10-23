@@ -29,7 +29,6 @@ export const useCreateCabin = (form?: Form, close?: () => void) => {
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       close?.();
       if (!form) return;
-      console.log("Cabin created", form.getValues);
       form.reset();
     },
     onError: (err) => {

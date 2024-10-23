@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "@tanstack/react-router";
 
 export function useMoveBack() {
-  const navigate = useNavigate();
-  return () => navigate(-1);
+  const { history } = useRouter();
+  return () => history.back();
 }

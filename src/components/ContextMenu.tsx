@@ -4,16 +4,24 @@ import { Pencil, Trash2, Copy } from "lucide-react";
 import { ConfirmDelete } from "@/components/ConfirmDelete";
 import { EditCabinForm } from "@/features/cabins/EditCabinForm";
 import type { Cabin } from "@/services/apiCabins";
-import { useDeleteCabin } from "@/features/cabins/useDeleteCabin";
+import { useCreateCabin } from "@/features/cabins/useCreateCabin";
 
-export const ContextMenu = ({
-  cabin,
-  handleDuplicate,
-}: {
-  cabin: Cabin;
-  handleDuplicate?: () => void;
-}) => {
-  const { mutate: deleteCabin, isDeleting } = useDeleteCabin(cabin.name);
+export const ContextMenu = ({ cabin }: { cabin: Cabin }) => {
+  const { mutate } = useCreateCabin();
+
+  const { name, image, description, regularPrice, discount, maxCapacity } =
+    cabin;
+
+  function handleDuplicate() {
+    mutate({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      description,
+      regularPrice,
+      discount,
+      image,
+    });
+  }
 
   return (
     <Modal>
@@ -43,16 +51,7 @@ export const ContextMenu = ({
         {/* Delete Cabin */}
         <Modal.Window
           name="delete-cabin"
-          render={(close) => (
-            <ConfirmDelete
-              resourceName={cabin.name}
-              disabled={isDeleting}
-              onClose={close}
-              onConfirm={() => {
-                deleteCabin(cabin);
-              }}
-            />
-          )}
+          render={(close) => <ConfirmDelete cabin={cabin} onClose={close} />}
         />
       </Menus.Menu>
     </Modal>

@@ -14,16 +14,17 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsIndexImport } from './routes/_layout/settings/index'
 import { Route as LayoutCabinsIndexImport } from './routes/_layout/cabins/index'
+import { Route as LayoutBookingsIndexImport } from './routes/_layout/bookings/index'
+import { Route as LayoutBookingsBookingIdImport } from './routes/_layout/bookings/$bookingId'
 
 // Create Virtual Routes
 
-const LoginIndexLazyImport = createFileRoute('/login/')()
 const LayoutUsersIndexLazyImport = createFileRoute('/_layout/users/')()
 const LayoutDashboardIndexLazyImport = createFileRoute('/_layout/dashboard/')()
-const LayoutBookingsIndexLazyImport = createFileRoute('/_layout/bookings/')()
 const LayoutAccountIndexLazyImport = createFileRoute('/_layout/account/')()
 
 // Create/Update Routes
@@ -33,10 +34,10 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LoginIndexLazyRoute = LoginIndexLazyImport.update({
+const LoginIndexRoute = LoginIndexImport.update({
   path: '/login/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/login/index.lazy').then((d) => d.Route))
+} as any)
 
 const LayoutIndexRoute = LayoutIndexImport.update({
   path: '/',
@@ -55,13 +56,6 @@ const LayoutDashboardIndexLazyRoute = LayoutDashboardIndexLazyImport.update({
   getParentRoute: () => LayoutRoute,
 } as any).lazy(() =>
   import('./routes/_layout/dashboard/index.lazy').then((d) => d.Route),
-)
-
-const LayoutBookingsIndexLazyRoute = LayoutBookingsIndexLazyImport.update({
-  path: '/bookings/',
-  getParentRoute: () => LayoutRoute,
-} as any).lazy(() =>
-  import('./routes/_layout/bookings/index.lazy').then((d) => d.Route),
 )
 
 const LayoutAccountIndexLazyRoute = LayoutAccountIndexLazyImport.update({
@@ -85,6 +79,18 @@ const LayoutCabinsIndexRoute = LayoutCabinsIndexImport.update({
   import('./routes/_layout/cabins/index.lazy').then((d) => d.Route),
 )
 
+const LayoutBookingsIndexRoute = LayoutBookingsIndexImport.update({
+  path: '/bookings/',
+  getParentRoute: () => LayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_layout/bookings/index.lazy').then((d) => d.Route),
+)
+
+const LayoutBookingsBookingIdRoute = LayoutBookingsBookingIdImport.update({
+  path: '/bookings/$bookingId',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -107,8 +113,22 @@ declare module '@tanstack/react-router' {
       id: '/login/'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexLazyImport
+      preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/bookings/$bookingId': {
+      id: '/_layout/bookings/$bookingId'
+      path: '/bookings/$bookingId'
+      fullPath: '/bookings/$bookingId'
+      preLoaderRoute: typeof LayoutBookingsBookingIdImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/bookings/': {
+      id: '/_layout/bookings/'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof LayoutBookingsIndexImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/cabins/': {
       id: '/_layout/cabins/'
@@ -129,13 +149,6 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof LayoutAccountIndexLazyImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/bookings/': {
-      id: '/_layout/bookings/'
-      path: '/bookings'
-      fullPath: '/bookings'
-      preLoaderRoute: typeof LayoutBookingsIndexLazyImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/dashboard/': {
@@ -160,14 +173,15 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   LayoutRoute: LayoutRoute.addChildren({
     LayoutIndexRoute,
+    LayoutBookingsBookingIdRoute,
+    LayoutBookingsIndexRoute,
     LayoutCabinsIndexRoute,
     LayoutSettingsIndexRoute,
     LayoutAccountIndexLazyRoute,
-    LayoutBookingsIndexLazyRoute,
     LayoutDashboardIndexLazyRoute,
     LayoutUsersIndexLazyRoute,
   }),
-  LoginIndexLazyRoute,
+  LoginIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -186,10 +200,11 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/",
+        "/_layout/bookings/$bookingId",
+        "/_layout/bookings/",
         "/_layout/cabins/",
         "/_layout/settings/",
         "/_layout/account/",
-        "/_layout/bookings/",
         "/_layout/dashboard/",
         "/_layout/users/"
       ]
@@ -199,7 +214,15 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/_layout"
     },
     "/login/": {
-      "filePath": "login/index.lazy.tsx"
+      "filePath": "login/index.tsx"
+    },
+    "/_layout/bookings/$bookingId": {
+      "filePath": "_layout/bookings/$bookingId.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/bookings/": {
+      "filePath": "_layout/bookings/index.tsx",
+      "parent": "/_layout"
     },
     "/_layout/cabins/": {
       "filePath": "_layout/cabins/index.tsx",
@@ -211,10 +234,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_layout/account/": {
       "filePath": "_layout/account/index.lazy.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/bookings/": {
-      "filePath": "_layout/bookings/index.lazy.tsx",
       "parent": "/_layout"
     },
     "/_layout/dashboard/": {

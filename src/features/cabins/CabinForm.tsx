@@ -15,14 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Row } from "@/components/Row";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateCabin } from "./useCreateCabin";
-
-const MAX_FILE_SIZE = 500000;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constants";
 
 const formSchema = z.object({
   name: z.string().min(2).max(20),

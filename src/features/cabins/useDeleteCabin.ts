@@ -2,7 +2,7 @@ import { useToast } from "@/hooks/use-toast";
 import { type Cabin, deleteCabin } from "@/services/apiCabins";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useDeleteCabin = (cabinName: string) => {
+export const useDeleteCabin = (cabinName: string, onClose?: () => void) => {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
@@ -18,14 +18,11 @@ export const useDeleteCabin = (cabinName: string) => {
         title: `${cabinName} deleted`,
         description: `${cabinName} deleted with success`,
       });
+      onClose?.();
     },
     onError: (err) => {
       toast({
         title: "Cabins failed",
-        // style: {
-        //   backgroundColor: "plum",
-        //   color: "blue",
-        // },
         description: err.message,
       });
     },

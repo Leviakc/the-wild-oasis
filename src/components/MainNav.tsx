@@ -20,7 +20,11 @@ export const MainNav = () => {
           </Link>
         </li>
         <li>
-          <Link to="/bookings" className="link">
+          <Link
+            to="/bookings"
+            search={(prev) => ({ ...prev, sortBy: "startDate-asc" })}
+            className="link"
+          >
             <CalendarDays />
             <span>Bookings</span>
           </Link>
