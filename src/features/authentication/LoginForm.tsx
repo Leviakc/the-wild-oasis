@@ -22,15 +22,16 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
   const { mutate: login, isPending } = useLogin();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "gomen@example.com",
+      password: "pass1234",
     },
   });
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     login(values);

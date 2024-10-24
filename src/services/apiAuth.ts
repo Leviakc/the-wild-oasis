@@ -1,3 +1,4 @@
+import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "./supabase";
 
 export const login = async ({
@@ -20,3 +21,27 @@ export const login = async ({
 
   return data;
 };
+
+export const getUser = async () => {
+  const { data: session } = await supabase.auth.getSession();
+
+  if (!session.session) {
+    return null;
+  }
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("error", error);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export const userQueryOptions = () =>
+  queryOptions({
+    queryKey: ["user"],
+    queryFn: getUser,
+    staleTime: Infinity,
+  });

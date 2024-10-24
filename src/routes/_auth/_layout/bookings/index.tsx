@@ -3,18 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { Loader } from "@/components/Loader";
-// import { fallback, zodSearchValidator } from '@tanstack/router-zod-adapter'
-// type BookingsStatusSearchOptions =
-//   | "all"
-//   | "unconfirmed"
-//   | "checked-in"
-//   | "checked-out";
-// | "cancelled";
-
-// type BookingsSearch = {
-//   status?: BookingsStatusSearchOptions;
-//   // sort?: "asc" | "desc";
-// };
 
 const bookingsSchema = z.object({
   status: z
@@ -32,7 +20,7 @@ const bookingsSchema = z.object({
 
 // type BookingsSearch = z.infer<typeof bookingsSchema>;
 
-export const Route = createFileRoute("/_layout/bookings/")({
+export const Route = createFileRoute("/_auth/_layout/bookings/")({
   validateSearch: bookingsSchema,
   // WARN: This is not working correctly so instead we are using zod for search
   // validation

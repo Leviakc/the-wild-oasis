@@ -7,7 +7,7 @@ import { Heading } from "@/components/Heading";
 import { Loader } from "@/components/Loader";
 import { bookingsQueryOptions } from "@/features/bookings/bookingsQueryOptions";
 
-export const Route = createLazyFileRoute("/_layout/bookings/")({
+export const Route = createLazyFileRoute("/_auth/_layout/bookings/")({
   component: Bookings,
   pendingComponent: Loader,
   errorComponent: ({ error }) => {
@@ -21,24 +21,11 @@ export const Route = createLazyFileRoute("/_layout/bookings/")({
   },
 });
 
-// type BookingsStatusSearchOptions =
-//   | "all"
-//   | "unconfirmed"
-//   | "checked-in"
-//   | "checked-out";
-// // | "cancelled";
-//
-// type BookingsSearch = {
-//   status: BookingsStatusSearchOptions;
-//   sort: "asc" | "desc";
-// };
-
 function Bookings() {
   const { status, sortBy: sort } = useSearch({
-    from: "/_layout/bookings/",
+    from: "/_auth/_layout/bookings/",
   });
 
-  // console.log("lazy", { status });
   const filter =
     !status || status === "all" ? null : { field: "status", value: status };
 

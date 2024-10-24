@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Loader } from "@/components/Loader";
 
-export const Route = createFileRoute("/_layout/settings/")({
+export const Route = createFileRoute("/_auth/_layout/settings/")({
   loader: ({ context: { queryClient } }) => {
     queryClient.ensureQueryData(settingsQueryOptions);
     // queryClient.ensureQueryData(cabinsQueryOptions)

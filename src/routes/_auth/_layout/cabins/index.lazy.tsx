@@ -8,7 +8,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Loader } from "@/components/Loader";
 
-export const Route = createLazyFileRoute("/_layout/cabins/")({
+export const Route = createLazyFileRoute("/_auth/_layout/cabins/")({
   component: Cabin,
   pendingComponent: Loader,
   errorComponent: ({ error }) => {

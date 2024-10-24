@@ -3,7 +3,7 @@ import { Heading } from "@/components/Heading";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { UpdateSettingsForm } from "@/features/settings/UpdateSettingsForm";
 
-export const Route = createLazyFileRoute("/_layout/settings/")({
+export const Route = createLazyFileRoute("/_auth/_layout/settings/")({
   component: Settings,
 });
 

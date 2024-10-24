@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-export const Route = createLazyFileRoute("/_layout/dashboard/")({
+export const Route = createLazyFileRoute("/_auth/_layout/dashboard/")({
   component: Dashboard,
 });
 

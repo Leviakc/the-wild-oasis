@@ -1,8 +1,14 @@
 import { Header } from "@/components/Header";
+import { Loader } from "@/components/Loader";
 import { Sidebar } from "@/components/Sidebar";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_layout")({
+export const Route = createFileRoute("/_auth/_layout")({
+  pendingComponent: () => (
+    <div className="grid h-screen place-content-center">
+      <Loader size={160} />
+    </div>
+  ),
   component: () => {
     return (
       <>
