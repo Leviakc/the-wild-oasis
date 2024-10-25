@@ -22,12 +22,22 @@ export const login = async ({
   return data;
 };
 
+export const logout = async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("error", error);
+    throw new Error(error.message);
+  }
+};
+
 export const getUser = async () => {
   const { data: session } = await supabase.auth.getSession();
 
   if (!session.session) {
     return null;
   }
+  console.log("session", session);
 
   const { data, error } = await supabase.auth.getUser();
 
