@@ -1,11 +1,4 @@
 import { Link } from "@tanstack/react-router";
-// import {
-//   HiOutlineCalendarDays,
-//   HiOutlineCog6Tooth,
-//   HiOutlineHome,
-//   HiOutlineHomeModern,
-//   HiOutlineUsers,
-// } from "react-icons/hi2";
 
 import { Home, CalendarDays, Warehouse, Settings, Users } from "lucide-react";
 

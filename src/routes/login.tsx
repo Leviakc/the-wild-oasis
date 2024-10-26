@@ -12,7 +12,7 @@ export const Route = createFileRoute("/login")({
   }),
   beforeLoad: async ({ context: { queryClient }, search }) => {
     const auth = await queryClient.ensureQueryData(userQueryOptions());
-    if (auth?.user) {
+    if (auth?.user.aud === "authenticated") {
       throw redirect({ to: search.redirect || fallbackPage });
     }
   },

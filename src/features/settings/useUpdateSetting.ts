@@ -1,5 +1,5 @@
 import { useToast } from "@/hooks/use-toast";
-import { type NewSettings, updateSetting } from "@/services/apiSettings";
+import { updateSetting } from "@/services/apiSettings";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateSetting = () => {

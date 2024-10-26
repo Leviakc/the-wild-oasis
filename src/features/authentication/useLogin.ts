@@ -17,7 +17,8 @@ export const useLogin = () => {
       login({ email, password }),
     onSuccess: async (user) => {
       // await queryClient.refetchQueries({ queryKey: ["user"] });
-      queryClient.setQueriesData({ queryKey: ["user"] }, user);
+      console.log("user.user", user);
+      queryClient.setQueryData(["user"], user);
       router.invalidate();
 
       navigate({

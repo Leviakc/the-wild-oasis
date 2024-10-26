@@ -13,157 +13,180 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LayoutImport } from './routes/_layout'
-import { Route as LoginIndexImport } from './routes/login/index'
-import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutSettingsIndexImport } from './routes/_layout/settings/index'
-import { Route as LayoutCabinsIndexImport } from './routes/_layout/cabins/index'
-import { Route as LayoutBookingsIndexImport } from './routes/_layout/bookings/index'
-import { Route as LayoutBookingsBookingIdImport } from './routes/_layout/bookings/$bookingId'
+import { Route as LoginImport } from './routes/login'
+import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthLayoutImport } from './routes/_auth/_layout'
+import { Route as AuthLayoutIndexImport } from './routes/_auth/_layout/index'
+import { Route as AuthLayoutSettingsIndexImport } from './routes/_auth/_layout/settings/index'
+import { Route as AuthLayoutCabinsIndexImport } from './routes/_auth/_layout/cabins/index'
+import { Route as AuthLayoutBookingsIndexImport } from './routes/_auth/_layout/bookings/index'
+import { Route as AuthLayoutBookingsBookingIdImport } from './routes/_auth/_layout/bookings/$bookingId'
 
 // Create Virtual Routes
 
-const LayoutUsersIndexLazyImport = createFileRoute('/_layout/users/')()
-const LayoutDashboardIndexLazyImport = createFileRoute('/_layout/dashboard/')()
-const LayoutAccountIndexLazyImport = createFileRoute('/_layout/account/')()
+const AuthLayoutUsersIndexLazyImport = createFileRoute(
+  '/_auth/_layout/users/',
+)()
+const AuthLayoutDashboardIndexLazyImport = createFileRoute(
+  '/_auth/_layout/dashboard/',
+)()
+const AuthLayoutAccountIndexLazyImport = createFileRoute(
+  '/_auth/_layout/account/',
+)()
 
 // Create/Update Routes
 
-const LayoutRoute = LayoutImport.update({
+const LoginRoute = LoginImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLayoutRoute = AuthLayoutImport.update({
   id: '/_layout',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthRoute,
 } as any)
 
-const LoginIndexRoute = LoginIndexImport.update({
-  path: '/login/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LayoutIndexRoute = LayoutIndexImport.update({
+const AuthLayoutIndexRoute = AuthLayoutIndexImport.update({
   path: '/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any)
 
-const LayoutUsersIndexLazyRoute = LayoutUsersIndexLazyImport.update({
+const AuthLayoutUsersIndexLazyRoute = AuthLayoutUsersIndexLazyImport.update({
   path: '/users/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any).lazy(() =>
-  import('./routes/_layout/users/index.lazy').then((d) => d.Route),
+  import('./routes/_auth/_layout/users/index.lazy').then((d) => d.Route),
 )
 
-const LayoutDashboardIndexLazyRoute = LayoutDashboardIndexLazyImport.update({
-  path: '/dashboard/',
-  getParentRoute: () => LayoutRoute,
-} as any).lazy(() =>
-  import('./routes/_layout/dashboard/index.lazy').then((d) => d.Route),
+const AuthLayoutDashboardIndexLazyRoute =
+  AuthLayoutDashboardIndexLazyImport.update({
+    path: '/dashboard/',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth/_layout/dashboard/index.lazy').then((d) => d.Route),
+  )
+
+const AuthLayoutAccountIndexLazyRoute = AuthLayoutAccountIndexLazyImport.update(
+  {
+    path: '/account/',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/_auth/_layout/account/index.lazy').then((d) => d.Route),
 )
 
-const LayoutAccountIndexLazyRoute = LayoutAccountIndexLazyImport.update({
-  path: '/account/',
-  getParentRoute: () => LayoutRoute,
-} as any).lazy(() =>
-  import('./routes/_layout/account/index.lazy').then((d) => d.Route),
-)
-
-const LayoutSettingsIndexRoute = LayoutSettingsIndexImport.update({
+const AuthLayoutSettingsIndexRoute = AuthLayoutSettingsIndexImport.update({
   path: '/settings/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any).lazy(() =>
-  import('./routes/_layout/settings/index.lazy').then((d) => d.Route),
+  import('./routes/_auth/_layout/settings/index.lazy').then((d) => d.Route),
 )
 
-const LayoutCabinsIndexRoute = LayoutCabinsIndexImport.update({
+const AuthLayoutCabinsIndexRoute = AuthLayoutCabinsIndexImport.update({
   path: '/cabins/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any).lazy(() =>
-  import('./routes/_layout/cabins/index.lazy').then((d) => d.Route),
+  import('./routes/_auth/_layout/cabins/index.lazy').then((d) => d.Route),
 )
 
-const LayoutBookingsIndexRoute = LayoutBookingsIndexImport.update({
+const AuthLayoutBookingsIndexRoute = AuthLayoutBookingsIndexImport.update({
   path: '/bookings/',
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => AuthLayoutRoute,
 } as any).lazy(() =>
-  import('./routes/_layout/bookings/index.lazy').then((d) => d.Route),
+  import('./routes/_auth/_layout/bookings/index.lazy').then((d) => d.Route),
 )
 
-const LayoutBookingsBookingIdRoute = LayoutBookingsBookingIdImport.update({
-  path: '/bookings/$bookingId',
-  getParentRoute: () => LayoutRoute,
-} as any)
+const AuthLayoutBookingsBookingIdRoute =
+  AuthLayoutBookingsBookingIdImport.update({
+    path: '/bookings/$bookingId',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_layout': {
-      id: '/_layout'
+    '/_auth': {
+      id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/login/': {
-      id: '/login/'
+    '/login': {
+      id: '/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
+      preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/bookings/$bookingId': {
-      id: '/_layout/bookings/$bookingId'
+    '/_auth/_layout': {
+      id: '/_auth/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthLayoutImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/_layout/': {
+      id: '/_auth/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthLayoutIndexImport
+      parentRoute: typeof AuthLayoutImport
+    }
+    '/_auth/_layout/bookings/$bookingId': {
+      id: '/_auth/_layout/bookings/$bookingId'
       path: '/bookings/$bookingId'
       fullPath: '/bookings/$bookingId'
-      preLoaderRoute: typeof LayoutBookingsBookingIdImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutBookingsBookingIdImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/bookings/': {
-      id: '/_layout/bookings/'
+    '/_auth/_layout/bookings/': {
+      id: '/_auth/_layout/bookings/'
       path: '/bookings'
       fullPath: '/bookings'
-      preLoaderRoute: typeof LayoutBookingsIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutBookingsIndexImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/cabins/': {
-      id: '/_layout/cabins/'
+    '/_auth/_layout/cabins/': {
+      id: '/_auth/_layout/cabins/'
       path: '/cabins'
       fullPath: '/cabins'
-      preLoaderRoute: typeof LayoutCabinsIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutCabinsIndexImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/settings/': {
-      id: '/_layout/settings/'
+    '/_auth/_layout/settings/': {
+      id: '/_auth/_layout/settings/'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof LayoutSettingsIndexImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutSettingsIndexImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/account/': {
-      id: '/_layout/account/'
+    '/_auth/_layout/account/': {
+      id: '/_auth/_layout/account/'
       path: '/account'
       fullPath: '/account'
-      preLoaderRoute: typeof LayoutAccountIndexLazyImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutAccountIndexLazyImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/dashboard/': {
-      id: '/_layout/dashboard/'
+    '/_auth/_layout/dashboard/': {
+      id: '/_auth/_layout/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof LayoutDashboardIndexLazyImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutDashboardIndexLazyImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/_layout/users/': {
-      id: '/_layout/users/'
+    '/_auth/_layout/users/': {
+      id: '/_auth/_layout/users/'
       path: '/users'
       fullPath: '/users'
-      preLoaderRoute: typeof LayoutUsersIndexLazyImport
-      parentRoute: typeof LayoutImport
+      preLoaderRoute: typeof AuthLayoutUsersIndexLazyImport
+      parentRoute: typeof AuthLayoutImport
     }
   }
 }
@@ -171,17 +194,19 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  LayoutRoute: LayoutRoute.addChildren({
-    LayoutIndexRoute,
-    LayoutBookingsBookingIdRoute,
-    LayoutBookingsIndexRoute,
-    LayoutCabinsIndexRoute,
-    LayoutSettingsIndexRoute,
-    LayoutAccountIndexLazyRoute,
-    LayoutDashboardIndexLazyRoute,
-    LayoutUsersIndexLazyRoute,
+  AuthRoute: AuthRoute.addChildren({
+    AuthLayoutRoute: AuthLayoutRoute.addChildren({
+      AuthLayoutIndexRoute,
+      AuthLayoutBookingsBookingIdRoute,
+      AuthLayoutBookingsIndexRoute,
+      AuthLayoutCabinsIndexRoute,
+      AuthLayoutSettingsIndexRoute,
+      AuthLayoutAccountIndexLazyRoute,
+      AuthLayoutDashboardIndexLazyRoute,
+      AuthLayoutUsersIndexLazyRoute,
+    }),
   }),
-  LoginIndexRoute,
+  LoginRoute,
 })
 
 /* prettier-ignore-end */
@@ -192,57 +217,64 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_layout",
-        "/login/"
+        "/_auth",
+        "/login"
       ]
     },
-    "/_layout": {
-      "filePath": "_layout.tsx",
+    "/_auth": {
+      "filePath": "_auth.tsx",
       "children": [
-        "/_layout/",
-        "/_layout/bookings/$bookingId",
-        "/_layout/bookings/",
-        "/_layout/cabins/",
-        "/_layout/settings/",
-        "/_layout/account/",
-        "/_layout/dashboard/",
-        "/_layout/users/"
+        "/_auth/_layout"
       ]
     },
-    "/_layout/": {
-      "filePath": "_layout/index.tsx",
-      "parent": "/_layout"
+    "/login": {
+      "filePath": "login.tsx"
     },
-    "/login/": {
-      "filePath": "login/index.tsx"
+    "/_auth/_layout": {
+      "filePath": "_auth/_layout.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/_layout/",
+        "/_auth/_layout/bookings/$bookingId",
+        "/_auth/_layout/bookings/",
+        "/_auth/_layout/cabins/",
+        "/_auth/_layout/settings/",
+        "/_auth/_layout/account/",
+        "/_auth/_layout/dashboard/",
+        "/_auth/_layout/users/"
+      ]
     },
-    "/_layout/bookings/$bookingId": {
-      "filePath": "_layout/bookings/$bookingId.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/": {
+      "filePath": "_auth/_layout/index.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/bookings/": {
-      "filePath": "_layout/bookings/index.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/bookings/$bookingId": {
+      "filePath": "_auth/_layout/bookings/$bookingId.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/cabins/": {
-      "filePath": "_layout/cabins/index.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/bookings/": {
+      "filePath": "_auth/_layout/bookings/index.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/settings/": {
-      "filePath": "_layout/settings/index.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/cabins/": {
+      "filePath": "_auth/_layout/cabins/index.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/account/": {
-      "filePath": "_layout/account/index.lazy.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/settings/": {
+      "filePath": "_auth/_layout/settings/index.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/dashboard/": {
-      "filePath": "_layout/dashboard/index.lazy.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/account/": {
+      "filePath": "_auth/_layout/account/index.lazy.tsx",
+      "parent": "/_auth/_layout"
     },
-    "/_layout/users/": {
-      "filePath": "_layout/users/index.lazy.tsx",
-      "parent": "/_layout"
+    "/_auth/_layout/dashboard/": {
+      "filePath": "_auth/_layout/dashboard/index.lazy.tsx",
+      "parent": "/_auth/_layout"
+    },
+    "/_auth/_layout/users/": {
+      "filePath": "_auth/_layout/users/index.lazy.tsx",
+      "parent": "/_auth/_layout"
     }
   }
 }
