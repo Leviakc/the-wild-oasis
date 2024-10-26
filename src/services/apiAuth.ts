@@ -1,6 +1,41 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "./supabase";
 
+export const signup = async ({
+  fullName,
+  email,
+  password,
+}: {
+  fullName: string;
+  email: string;
+  password: string;
+}) => {
+  // Save the current session before signing up a new user
+  const { data: savedSessionData } = await supabase.auth.getSession();
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: "",
+      },
+    },
+  });
+
+  if (savedSessionData.session) {
+    await supabase.auth.setSession(savedSessionData.session);
+  }
+
+  if (error) {
+    console.error("error", error);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 export const login = async ({
   email,
   password,
