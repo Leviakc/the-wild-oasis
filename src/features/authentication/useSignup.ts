@@ -15,6 +15,13 @@ export const useSignup = () => {
         variant: "success",
       });
     },
+    onError: (err) => {
+      console.error("error", err);
+      toast({
+        title: err.message,
+        variant: "destructive",
+      });
+    },
   });
 
   return {

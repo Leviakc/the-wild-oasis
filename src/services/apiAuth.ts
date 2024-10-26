@@ -27,12 +27,25 @@ export const signup = async ({
   if (savedSessionData.session) {
     await supabase.auth.setSession(savedSessionData.session);
   }
+  // Handle errors
+  let authError = null;
+
+  if (data.user && !data?.user?.identities?.length) {
+    authError = {
+      name: "AuthApiError",
+      message: "This email has already been registered",
+    };
+  }
 
   if (error) {
     console.error("error", error);
-    throw new Error(error.message);
+    authError = {
+      name: error.name,
+      message: error.message,
+    };
   }
 
+  if (authError) throw new Error(authError.message);
   return data;
 };
 
