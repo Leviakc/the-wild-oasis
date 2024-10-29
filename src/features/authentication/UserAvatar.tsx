@@ -1,21 +1,22 @@
-import styled from "styled-components";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { userQueryOptions } from "@/services/apiAuth";
 
-const StyledUserAvatar = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
-  font-weight: 500;
-  font-size: 1.4rem;
-  color: var(--color-grey-600);
-`;
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { UserMetadata } from "@supabase/supabase-js";
+import { defaultAvatar } from "@/constants";
 
-const Avatar = styled.img`
-  display: block;
-  width: 4rem;
-  width: 3.6rem;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 50%;
-  outline: 2px solid var(--color-grey-100);
-`;
+export const UserAvatar = () => {
+  const { data: user } = useSuspenseQuery(userQueryOptions());
+
+  const { fullName = "", avatar = "" } = user?.user
+    .user_metadata as UserMetadata;
+  return (
+    <div className="flex items-center gap-3 text-sm font-medium text-gray-600">
+      <Avatar>
+        <AvatarImage src={avatar || defaultAvatar} />
+        <AvatarFallback>{`Avatar of ${fullName}`}</AvatarFallback>
+      </Avatar>
+      <p>{fullName}</p>
+    </div>
+  );
+};

@@ -7,3 +7,6 @@ export const ACCEPTED_IMAGE_TYPES = [
 ];
 
 export const fallbackPage = "/dashboard";
+
+export const defaultAvatar =
+  "https://vmmegtcpicagplzploed.supabase.co/storage/v1/object/public/avatars/default-user.jpg";
