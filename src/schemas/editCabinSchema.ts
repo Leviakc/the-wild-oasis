@@ -16,7 +16,7 @@ export const editFormSchema = z.object({
     }),
   regularPrice: z.coerce.number().positive(),
   discount: z.coerce.number().min(0).max(100),
-  description: z.string().max(300),
+  description: z.string().max(500),
   image: z.union([
     z
       .instanceof(FileList, { message: "A file is required" })

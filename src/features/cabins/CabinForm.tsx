@@ -158,6 +158,7 @@ export const CabinForm = ({ setShowForm }: { setShowForm: () => void }) => {
             </FormItem>
           )}
         />
+
         {/* Image */}
         <FormField
           control={form.control}
@@ -185,6 +186,7 @@ export const CabinForm = ({ setShowForm }: { setShowForm: () => void }) => {
             </FormItem>
           )}
         />
+
         <Row>
           <Button type="submit" disabled={isCreating}>
             Submit

@@ -95,6 +95,7 @@ export const createCabin = async (newCabin: NewCabin) => {
 export const updateCabin = async (cabin: EditCabin) => {
   const { oldImage, ...newCabin } = cabin;
 
+  // If image is a string, cabin already has an image and don't want to update image
   if (typeof newCabin.image === "string") {
     const { data, error } = await supabase
       .from("cabins")
@@ -110,6 +111,7 @@ export const updateCabin = async (cabin: EditCabin) => {
 
   // Delete image
   const imageName = oldImage.split("/").at(-1);
+  // this is for the compiler to know imageName is not undefined
   if (!imageName) return;
 
   const { error: storageError } = await supabase.storage
@@ -124,7 +126,6 @@ export const updateCabin = async (cabin: EditCabin) => {
   const newImageName =
     `${crypto.randomUUID()}-${newCabin.image[0].name}`.replaceAll("/", "-");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${newImageName}`;
-  console.log(cabin.image);
 
   // Upload new image
   const { error } = await supabase.storage
