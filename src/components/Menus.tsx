@@ -77,12 +77,13 @@ const Toggle = ({ id }: { id: number }) => {
   return (
     <button
       onClick={(e) => handleClick(e)}
-      className="delay-50 translate-x-2 rounded-sm border-none bg-none p-1 transition-all hover:bg-gray-200 [&_svg]:h-6 [&_svg]:w-6 [&_svg]:text-gray-700"
+      className="delay-50 translate-x-2 rounded-sm border-none bg-none p-1 transition-all hover:bg-gray-200 dark:hover:bg-gray-500 [&_svg]:h-6 [&_svg]:w-6 [&_svg]:text-gray-700 dark:[&_svg]:text-gray-300"
     >
       <EllipsisVertical />
     </button>
   );
 };
+
 const List = ({ id, children }: { id: number; children: React.ReactNode }) => {
   const { openId, close, position } = useContext(MenusContext);
   // const ref = useOutsideClick<HTMLUListElement>(close);
@@ -94,7 +95,7 @@ const List = ({ id, children }: { id: number; children: React.ReactNode }) => {
   // top: ${(props) => props.position.y}px;
   return createPortal(
     <ul
-      className="fixed right-10 top-10 rounded-md bg-white shadow-md"
+      className="fixed right-10 top-10 overflow-hidden rounded-md bg-white shadow-md dark:bg-gray-800"
       ref={ref}
       style={{ right: position.x, top: position.y }}
     >
@@ -121,7 +122,7 @@ const Button = ({ children, icon, onClick, ...props }: ButtonProps) => {
   return (
     <li>
       <button
-        className="boder-0 delay-50 [&>svg]:delay-50 flex w-full items-center gap-4 bg-none px-6 py-3 text-sm transition-all hover:bg-gray-300 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-gray-400 [&>svg]:transition-all"
+        className="boder-0 delay-50 [&>svg]:delay-50 flex w-full items-center gap-4 bg-none px-6 py-3 text-sm transition-all hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 [&>svg]:h-4 [&>svg]:w-4 [&>svg]:text-gray-400 [&>svg]:transition-all"
         onClick={handleClick}
         {...props}
       >

@@ -51,7 +51,7 @@ export const columns: ColumnDef<Cabin, "string">[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="uppercase hover:bg-gray-400"
+          className="uppercase hover:bg-gray-400 dark:hover:bg-gray-700"
         >
           Cabin
           <SortedIcon isSorted={column.getIsSorted()} />
@@ -67,7 +67,7 @@ export const columns: ColumnDef<Cabin, "string">[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="uppercase hover:bg-gray-400"
+          className="uppercase hover:bg-gray-400 dark:hover:bg-gray-700"
         >
           Capacity
           <SortedIcon isSorted={column.getIsSorted()} />
@@ -83,7 +83,7 @@ export const columns: ColumnDef<Cabin, "string">[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="uppercase hover:bg-gray-400"
+          className="uppercase hover:bg-gray-400 dark:hover:bg-gray-700"
         >
           Price
           <SortedIcon isSorted={column.getIsSorted()} />
@@ -100,7 +100,7 @@ export const columns: ColumnDef<Cabin, "string">[] = [
     // header: "Discount",
     cell: ({ row }) => {
       return row.original.discount ? (
-        <span className="text-green-700">
+        <span className="text-green-700 dark:text-green-500">
           {formatCurrency(row.original.discount)}
         </span>
       ) : (

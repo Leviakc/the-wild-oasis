@@ -135,7 +135,7 @@ export const CabinTable = <TData, TValue>({
                     return (
                       <TableHead
                         key={header.id}
-                        className="uppercase text-gray-800"
+                        className="uppercase text-gray-800 dark:text-gray-100"
                       >
                         {header.isPlaceholder
                           ? null
@@ -155,6 +155,7 @@ export const CabinTable = <TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className="hover:bg-gray-300 dark:hover:bg-gray-800"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="">

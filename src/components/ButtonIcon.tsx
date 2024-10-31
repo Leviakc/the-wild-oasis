@@ -8,7 +8,7 @@ type ButtonIconProps = ComponentProps<"button"> & {
 export const ButtonIcon = ({ children, ...props }: ButtonIconProps) => {
   return (
     <button
-      className="h-6 rounded-sm border-none bg-none p-1.5 text-brand-600 transition-all delay-200 hover:bg-gray-100 [&>svg]:w-6"
+      className="h-9 rounded-sm border-none bg-none p-1.5 text-brand-600 hover:bg-gray-300 dark:hover:bg-gray-700 [&_svg]:w-6"
       {...props}
     >
       {children}
