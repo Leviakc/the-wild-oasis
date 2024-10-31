@@ -1,4 +1,8 @@
+import { Row } from "@/components/Row";
+import { Heading } from "@/components/Heading";
+
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { DashboardLayout } from "@/starter/features/dashboard/DashboardLayout";
 
 export const Route = createLazyFileRoute("/_auth/_layout/dashboard/")({
   component: Dashboard,
@@ -7,7 +11,12 @@ export const Route = createLazyFileRoute("/_auth/_layout/dashboard/")({
 function Dashboard() {
   return (
     <>
-      <h1>Dashboard</h1>
+      <Row variant={"horizontal"}>
+        <Heading>Dashboard</Heading>
+        <p>Test</p>
+      </Row>
+
+      <DashboardLayout />
     </>
   );
 }
