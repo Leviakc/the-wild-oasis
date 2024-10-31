@@ -1,15 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "@tanstack/react-router";
-import { ClockArrowDown, ClockArrowUp, EyeIcon, Trash2 } from "lucide-react";
 import { format, isToday } from "date-fns";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
 import type { Booking } from "@/services/apiBookings";
-import { Modal } from "@/components/Modal";
-import { Menus } from "@/components/Menus";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SortedIcon } from "@/components/SortedIcon";
+import { BookingContextMenu } from "./BookingContextMenu";
 
 export const bookingsColumns: ColumnDef<Booking, "string">[] = [
   {
@@ -17,7 +15,7 @@ export const bookingsColumns: ColumnDef<Booking, "string">[] = [
     header: "Cabin",
     // font-family: "Sono";
     cell: ({ row }) => (
-      <span className="font-semibold text-gray-600">
+      <span className="font-semibold text-gray-600 dark:text-gray-300">
         {row.original.cabins.name}
       </span>
     ),
@@ -55,7 +53,7 @@ export const bookingsColumns: ColumnDef<Booking, "string">[] = [
             onClick={() => {
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
-            className="uppercase hover:bg-gray-400"
+            className="uppercase hover:bg-gray-400 dark:hover:bg-gray-700"
           >
             Dates
             <SortedIcon isSorted={column.getIsSorted()} />
@@ -107,7 +105,7 @@ export const bookingsColumns: ColumnDef<Booking, "string">[] = [
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="uppercase hover:bg-gray-400"
+            className="uppercase hover:bg-gray-400 dark:hover:bg-gray-700"
           >
             Amount
             <SortedIcon isSorted={column.getIsSorted()} />
@@ -126,59 +124,9 @@ export const bookingsColumns: ColumnDef<Booking, "string">[] = [
     id: "actions",
     header: "",
     cell: ({ row }) => {
-      const { id: bookingId, status } = row.original;
       // font-family: "Sono";
       // font-weight: 500;
-      return (
-        <Modal>
-          <Menus.Menu>
-            <Menus.Toggle id={bookingId} />
-            <Menus.List id={bookingId}>
-              <Link
-                to="/bookings/$bookingId"
-                params={{
-                  bookingId: bookingId.toString(),
-                }}
-              >
-                <Menus.Button icon={<EyeIcon color="#111" />}>
-                  See details
-                </Menus.Button>
-              </Link>
-
-              {status === "unconfirmed" && (
-                <Menus.Button
-                  icon={<ClockArrowDown color="#111" />}
-                  // onClick={() => navigate(`/checkin/${bookingId}`)}
-                >
-                  Check in
-                </Menus.Button>
-              )}
-              {status === "checked-in" && (
-                <Menus.Button
-                  icon={<ClockArrowUp color="#111" />}
-                  // onClick={() => checkout(bookingId)}
-                  // disabled={isCheckingOut}
-                >
-                  Check out
-                </Menus.Button>
-              )}
-              <Modal.Open opens="delete">
-                <Menus.Button icon={<Trash2 color="#111" />}>
-                  Delete booking
-                </Menus.Button>
-              </Modal.Open>
-            </Menus.List>
-          </Menus.Menu>
-
-          <Modal.Window name="delete">
-            {/* <ConfirmDelete */}
-            {/*   resourceName="booking" */}
-            {/*   disabled={isDeleting} */}
-            {/*   onConfirm={() => deleteBooking(bookingId)} */}
-            {/* /> */}
-          </Modal.Window>
-        </Modal>
-      );
+      return <BookingContextMenu booking={row.original} />;
     },
   },
 ];

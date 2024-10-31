@@ -8,9 +8,12 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        unconfirmed: "bg-blue-200 text-[--color-blue-700]",
-        "checked-in": "bg-green-200 text-green-800",
-        "checked-out": "bg-gray-300 text-gray-700",
+        unconfirmed:
+          "bg-blue-200 dark:bg-[#075985] dark:text-blue-200 text-[#075985]",
+        "checked-in":
+          "bg-green-200 text-green-800 dark:text-green-200 dark:bg-green-800",
+        "checked-out":
+          "bg-gray-300 text-gray-700 dark:text-gray-300 dark:bg-gray-700",
         default:
           "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
         secondary:
