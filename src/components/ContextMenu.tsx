@@ -6,10 +6,12 @@ import { EditCabinForm } from "@/features/cabins/EditCabinForm";
 import type { Cabin } from "@/services/apiCabins";
 import { useCreateCabin } from "@/features/cabins/useCreateCabin";
 import { useThemeToggle } from "@/hooks/useThemeToggle";
+import { useDeleteCabin } from "@/features/cabins/useDeleteCabin";
 
 export const ContextMenu = ({ cabin }: { cabin: Cabin }) => {
   const { mutate } = useCreateCabin();
   const { theme } = useThemeToggle();
+  const { mutate: deleteCabin, isDeleting } = useDeleteCabin(cabin.name);
   const colorIcon = theme === "dark" ? "#fff" : "#111";
 
   const { name, image, description, regularPrice, discount, maxCapacity } =
@@ -61,7 +63,20 @@ export const ContextMenu = ({ cabin }: { cabin: Cabin }) => {
         {/* Delete Cabin */}
         <Modal.Window
           name="delete-cabin"
-          render={(close) => <ConfirmDelete cabin={cabin} onClose={close} />}
+          render={(close) => (
+            <ConfirmDelete
+              resourceName={cabin.name}
+              onCloseModal={close}
+              disabled={isDeleting}
+              onConfirm={() => {
+                deleteCabin(cabin, {
+                  onSettled() {
+                    close();
+                  },
+                });
+              }}
+            />
+          )}
         />
       </Menus.Menu>
     </Modal>

@@ -1,40 +1,44 @@
-import { Cabin } from "@/services/apiCabins";
 import { Heading } from "./Heading";
 import { Button } from "./ui/button";
-import { useDeleteCabin } from "@/features/cabins/useDeleteCabin";
 
 type ConfirmDeleteProps = {
-  onClose: () => void;
-  cabin: Cabin;
+  onCloseModal: () => void;
+  resourceName: string;
+  onConfirm: () => void;
+  disabled?: boolean;
 };
 
-export const ConfirmDelete = ({ onClose, cabin }: ConfirmDeleteProps) => {
-  const { mutate: deleteCabin, isDeleting } = useDeleteCabin(
-    cabin.name,
-    onClose,
-  );
-
+export const ConfirmDelete = ({
+  resourceName,
+  onConfirm,
+  disabled,
+  onCloseModal,
+}: ConfirmDeleteProps) => {
   return (
     <div className="flex w-96 flex-col gap-3">
       <Heading variant={"h3"}>Delete</Heading>
       <p className="mb-3 text-gray-500">
         Are you sure you want to delete{" "}
-        <span className="font-bold text-gray-800">{cabin.name}</span>{" "}
+        <span className="font-bold text-gray-800 dark:text-gray-200">
+          {resourceName}
+        </span>{" "}
         permanently? This action cannot be undone.
       </p>
 
       <div className="flex justify-end gap-3">
         <Button
-          onClick={() => onClose()}
+          onClick={() => onCloseModal()}
           variant="secondary"
-          disabled={isDeleting}
+          disabled={disabled}
+          className="dark:bg-gray-900 dark:hover:bg-gray-950"
         >
           Cancel
         </Button>
         <Button
-          onClick={() => deleteCabin(cabin)}
+          onClick={() => onConfirm()}
           variant="destructive"
-          disabled={isDeleting}
+          disabled={disabled}
+          className="dark:bg-red-600 dark:hover:bg-red-800"
         >
           Delete
         </Button>
