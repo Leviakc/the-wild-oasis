@@ -36,7 +36,7 @@ export function BookingDataBox({ booking }: { booking: Booking }) {
   } = booking;
 
   return (
-    <section className="my-2.5 overflow-hidden rounded-md border border-solid border-gray-100 bg-white">
+    <section className="my-2.5 overflow-hidden rounded-md border border-solid border-gray-100 bg-white dark:border-gray-900 dark:bg-gray-800">
       <header className="flex items-center justify-between bg-brand-500 px-10 py-5 text-lg font-medium text-[#e0e7ff] [&_div:first-child]:flex [&_div:first-child]:items-center [&_div:first-child]:gap-4 [&_div:first-child]:text-lg [&_div:first-child]:font-semibold [&_span]:ml-1 [&_span]:text-xl [&_svg]:h-8 [&_svg]:w-8">
         <div>
           <HiOutlineHomeModern />
@@ -55,7 +55,7 @@ export function BookingDataBox({ booking }: { booking: Booking }) {
       </header>
 
       <section className="px-10 pb-3 pt-8">
-        <div className="mb-4 flex items-center gap-3 text-gray-500 [&>p]:first-of-type:font-medium [&>p]:first-of-type:text-gray-700">
+        <div className="mb-4 flex items-center gap-3 text-gray-500 [&>p]:first-of-type:font-medium [&>p]:first-of-type:text-gray-700 dark:[&>p]:first-of-type:text-gray-200">
           {countryFlag && (
             <Flag src={countryFlag} alt={`Flag of ${nationality}`} />
           )}
