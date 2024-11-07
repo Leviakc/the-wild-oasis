@@ -3,7 +3,7 @@ import { userQueryOptions } from "@/services/apiAuth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { UserMetadata } from "@supabase/supabase-js";
-import { defaultAvatar } from "@/constants";
+import { defaultAvatar } from "@/utils/constants";
 
 export const UserAvatar = () => {
   const { data: user } = useSuspenseQuery(userQueryOptions());

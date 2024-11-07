@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSignup } from "./useSignup";
 import { Row } from "@/components/Row";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constants";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/utils/constants";
 
 const formSchema = z
   .object({

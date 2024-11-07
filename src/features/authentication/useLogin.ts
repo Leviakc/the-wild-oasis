@@ -1,4 +1,4 @@
-import { fallbackPage } from "@/constants";
+import { fallbackPage } from "@/utils/constants";
 import { useToast } from "@/hooks/use-toast";
 import { login } from "@/services/apiAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

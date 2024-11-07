@@ -18,17 +18,16 @@ import { Route as AuthImport } from './routes/_auth'
 import { Route as AuthLayoutImport } from './routes/_auth/_layout'
 import { Route as AuthLayoutIndexImport } from './routes/_auth/_layout/index'
 import { Route as AuthLayoutSettingsIndexImport } from './routes/_auth/_layout/settings/index'
+import { Route as AuthLayoutDashboardIndexImport } from './routes/_auth/_layout/dashboard/index'
 import { Route as AuthLayoutCabinsIndexImport } from './routes/_auth/_layout/cabins/index'
 import { Route as AuthLayoutBookingsIndexImport } from './routes/_auth/_layout/bookings/index'
+import { Route as AuthLayoutCheckinBookingIdImport } from './routes/_auth/_layout/checkin/$bookingId'
 import { Route as AuthLayoutBookingsBookingIdImport } from './routes/_auth/_layout/bookings/$bookingId'
 
 // Create Virtual Routes
 
 const AuthLayoutUsersIndexLazyImport = createFileRoute(
   '/_auth/_layout/users/',
-)()
-const AuthLayoutDashboardIndexLazyImport = createFileRoute(
-  '/_auth/_layout/dashboard/',
 )()
 const AuthLayoutAccountIndexLazyImport = createFileRoute(
   '/_auth/_layout/account/',
@@ -63,14 +62,6 @@ const AuthLayoutUsersIndexLazyRoute = AuthLayoutUsersIndexLazyImport.update({
   import('./routes/_auth/_layout/users/index.lazy').then((d) => d.Route),
 )
 
-const AuthLayoutDashboardIndexLazyRoute =
-  AuthLayoutDashboardIndexLazyImport.update({
-    path: '/dashboard/',
-    getParentRoute: () => AuthLayoutRoute,
-  } as any).lazy(() =>
-    import('./routes/_auth/_layout/dashboard/index.lazy').then((d) => d.Route),
-  )
-
 const AuthLayoutAccountIndexLazyRoute = AuthLayoutAccountIndexLazyImport.update(
   {
     path: '/account/',
@@ -87,6 +78,13 @@ const AuthLayoutSettingsIndexRoute = AuthLayoutSettingsIndexImport.update({
   import('./routes/_auth/_layout/settings/index.lazy').then((d) => d.Route),
 )
 
+const AuthLayoutDashboardIndexRoute = AuthLayoutDashboardIndexImport.update({
+  path: '/dashboard/',
+  getParentRoute: () => AuthLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_auth/_layout/dashboard/index.lazy').then((d) => d.Route),
+)
+
 const AuthLayoutCabinsIndexRoute = AuthLayoutCabinsIndexImport.update({
   path: '/cabins/',
   getParentRoute: () => AuthLayoutRoute,
@@ -99,6 +97,13 @@ const AuthLayoutBookingsIndexRoute = AuthLayoutBookingsIndexImport.update({
   getParentRoute: () => AuthLayoutRoute,
 } as any).lazy(() =>
   import('./routes/_auth/_layout/bookings/index.lazy').then((d) => d.Route),
+)
+
+const AuthLayoutCheckinBookingIdRoute = AuthLayoutCheckinBookingIdImport.update(
+  {
+    path: '/checkin/$bookingId',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any,
 )
 
 const AuthLayoutBookingsBookingIdRoute =
@@ -146,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutBookingsBookingIdImport
       parentRoute: typeof AuthLayoutImport
     }
+    '/_auth/_layout/checkin/$bookingId': {
+      id: '/_auth/_layout/checkin/$bookingId'
+      path: '/checkin/$bookingId'
+      fullPath: '/checkin/$bookingId'
+      preLoaderRoute: typeof AuthLayoutCheckinBookingIdImport
+      parentRoute: typeof AuthLayoutImport
+    }
     '/_auth/_layout/bookings/': {
       id: '/_auth/_layout/bookings/'
       path: '/bookings'
@@ -160,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutCabinsIndexImport
       parentRoute: typeof AuthLayoutImport
     }
+    '/_auth/_layout/dashboard/': {
+      id: '/_auth/_layout/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthLayoutDashboardIndexImport
+      parentRoute: typeof AuthLayoutImport
+    }
     '/_auth/_layout/settings/': {
       id: '/_auth/_layout/settings/'
       path: '/settings'
@@ -172,13 +191,6 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AuthLayoutAccountIndexLazyImport
-      parentRoute: typeof AuthLayoutImport
-    }
-    '/_auth/_layout/dashboard/': {
-      id: '/_auth/_layout/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthLayoutDashboardIndexLazyImport
       parentRoute: typeof AuthLayoutImport
     }
     '/_auth/_layout/users/': {
@@ -198,11 +210,12 @@ export const routeTree = rootRoute.addChildren({
     AuthLayoutRoute: AuthLayoutRoute.addChildren({
       AuthLayoutIndexRoute,
       AuthLayoutBookingsBookingIdRoute,
+      AuthLayoutCheckinBookingIdRoute,
       AuthLayoutBookingsIndexRoute,
       AuthLayoutCabinsIndexRoute,
+      AuthLayoutDashboardIndexRoute,
       AuthLayoutSettingsIndexRoute,
       AuthLayoutAccountIndexLazyRoute,
-      AuthLayoutDashboardIndexLazyRoute,
       AuthLayoutUsersIndexLazyRoute,
     }),
   }),
@@ -236,11 +249,12 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_auth/_layout/",
         "/_auth/_layout/bookings/$bookingId",
+        "/_auth/_layout/checkin/$bookingId",
         "/_auth/_layout/bookings/",
         "/_auth/_layout/cabins/",
+        "/_auth/_layout/dashboard/",
         "/_auth/_layout/settings/",
         "/_auth/_layout/account/",
-        "/_auth/_layout/dashboard/",
         "/_auth/_layout/users/"
       ]
     },
@@ -252,6 +266,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth/_layout/bookings/$bookingId.tsx",
       "parent": "/_auth/_layout"
     },
+    "/_auth/_layout/checkin/$bookingId": {
+      "filePath": "_auth/_layout/checkin/$bookingId.tsx",
+      "parent": "/_auth/_layout"
+    },
     "/_auth/_layout/bookings/": {
       "filePath": "_auth/_layout/bookings/index.tsx",
       "parent": "/_auth/_layout"
@@ -260,16 +278,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth/_layout/cabins/index.tsx",
       "parent": "/_auth/_layout"
     },
+    "/_auth/_layout/dashboard/": {
+      "filePath": "_auth/_layout/dashboard/index.tsx",
+      "parent": "/_auth/_layout"
+    },
     "/_auth/_layout/settings/": {
       "filePath": "_auth/_layout/settings/index.tsx",
       "parent": "/_auth/_layout"
     },
     "/_auth/_layout/account/": {
       "filePath": "_auth/_layout/account/index.lazy.tsx",
-      "parent": "/_auth/_layout"
-    },
-    "/_auth/_layout/dashboard/": {
-      "filePath": "_auth/_layout/dashboard/index.lazy.tsx",
       "parent": "/_auth/_layout"
     },
     "/_auth/_layout/users/": {

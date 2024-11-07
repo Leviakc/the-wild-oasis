@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase, supabaseUrl } from "./supabase";
-import { defaultAvatar } from "@/constants";
+import { defaultAvatar } from "@/utils/constants";
 
 export type UpdateUser = {
   id?: string;
@@ -34,8 +34,8 @@ export const signup = async ({
     .upload(newAvatarName, avatar?.[0] || defaultAvatar);
 
   if (uploadAvatarError) {
-    console.log(uploadAvatarError);
-    throw new Error("Avatar image could not be uploaded");
+    console.error(uploadAvatarError, uploadAvatarError.message);
+    throw new Error("Avatar image could not be uploaded", uploadAvatarError);
   }
 
   // Save the current session before signing up a new user
@@ -107,9 +107,6 @@ export const logout = async () => {
   }
 };
 
-/**
- * Update user data
- */
 export const updateCurrentUser = async (values: UpdateUser) => {
   const { oldAvatar, id, ...user } = values;
   // You can update just the password or the User but not both at the same time
@@ -146,15 +143,15 @@ export const updateCurrentUser = async (values: UpdateUser) => {
   // .- Update fullName and avatar
   const avatarName = oldAvatar?.split("/").at(-1);
   // this is for the compiler to know imageName is not undefined
-  if (!avatarName) return;
+  if (avatarName) {
+    const { error: storageError } = await supabase.storage
+      .from("avatars")
+      .remove([avatarName]);
 
-  const { error: storageError } = await supabase.storage
-    .from("avatars")
-    .remove([avatarName]);
-
-  if (storageError) {
-    console.log(storageError);
-    throw new Error("Cabin image could not be deleted");
+    if (storageError) {
+      console.log(storageError);
+      throw new Error("Cabin image could not be deleted");
+    }
   }
 
   // Create new avatar name
@@ -182,7 +179,7 @@ export const updateCurrentUser = async (values: UpdateUser) => {
   });
 
   if (error) {
-    console.log("error", error);
+    console.error("error", error);
     throw new Error(error.message);
   }
 

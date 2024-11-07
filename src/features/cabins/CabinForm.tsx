@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Row } from "@/components/Row";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreateCabin } from "./useCreateCabin";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constants";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/utils/constants";
 
 const formSchema = z.object({
   name: z.string().min(2).max(20),
@@ -67,7 +67,10 @@ export const CabinForm = ({ setShowForm }: { setShowForm: () => void }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-2 dark:bg-gray-800"
+      >
         {/* name */}
         <FormField
           control={form.control}
@@ -166,9 +169,10 @@ export const CabinForm = ({ setShowForm }: { setShowForm: () => void }) => {
           render={() => (
             <FormItem>
               <FormLabel>Cabin photo</FormLabel>
-              <FormControl className="relative inline-block">
+              <FormControl>
                 <Input
-                  className="m-0 overflow-hidden border-none p-0 file:my-auto file:mt-0 file:rounded-md file:bg-primary file:px-3 file:py-2 file:text-white"
+                  // className="m-0 overflow-hidden border-none p-0 file:my-auto file:mt-0 file:rounded-md file:bg-primary file:px-3 file:py-2 file:text-white"
+                  className="m-0 overflow-hidden border-none p-0 file:my-auto file:mt-0 file:rounded-md file:bg-primary file:px-3 file:py-2 file:text-white dark:file:text-black"
                   type="file"
                   accept="image/*"
                   id="imageInput"
@@ -188,13 +192,18 @@ export const CabinForm = ({ setShowForm }: { setShowForm: () => void }) => {
         />
 
         <Row>
-          <Button type="submit" disabled={isCreating}>
+          <Button
+            type="submit"
+            disabled={isCreating}
+            className="dark:hover:bg-gray-300"
+          >
             Submit
           </Button>
           <Button
             variant={"secondary"}
             type="reset"
             onClick={() => setShowForm()}
+            className="dark:bg-gray-900 dark:hover:bg-gray-950"
           >
             Cancel
           </Button>

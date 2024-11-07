@@ -11,7 +11,7 @@ import { Loader } from "@/components/Loader";
 export const Route = createLazyFileRoute("/_auth/_layout/cabins/")({
   component: Cabin,
   pendingComponent: Loader,
-  errorComponent: ({ error }) => {
+  errorComponent: ({ error }: { error: Error }) => {
     // Render an error message
     return (
       <>

@@ -1,5 +1,5 @@
 import { supabaseUrl } from "@/services/supabase";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constants";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/utils/constants";
 import { z } from "zod";
 
 export const editFormSchema = z.object({

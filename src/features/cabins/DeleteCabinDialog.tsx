@@ -21,7 +21,7 @@ export const DeleteCabinDialog = ({ cabin }: DeleteCabinDialogProps) => {
           <ConfirmDelete
             resourceName={cabin.name}
             disabled={isDeleting}
-            onClose={close}
+            onCloseModal={close}
             onConfirm={() => {
               mutate(cabin);
             }}

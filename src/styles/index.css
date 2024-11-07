@@ -226,3 +226,23 @@
 .active {
   @apply border-[--border-radius-sm] bg-gray-200 text-gray-800 visited:border-[--border-radius-sm] visited:bg-gray-100 visited:text-gray-800 dark:bg-gray-800 dark:visited:bg-gray-800 dark:visited:text-gray-100;
 }
+
+& .recharts-cartesian-grid-horizontal line,
+& .recharts-cartesian-grid-vertical line {
+  @apply /* @apply stroke: var(--color-grey-300); */ stroke-gray-300 dark:stroke-gray-600;
+}
+.todayList {
+  overflow: scroll;
+  overflow-x: hidden;
+
+  /* Removing scrollbars for webkit, firefox, and ms, respectively */
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+& .recharts-pie-label-text {
+  @apply font-semibold;
+}

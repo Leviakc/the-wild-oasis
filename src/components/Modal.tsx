@@ -75,7 +75,7 @@ const Window = ({ render, name }: ModalWindowProps) => {
     <div className="fixed left-0 top-0 z-10 h-screen w-full bg-[--backdrop-color] backdrop-blur-sm transition-all delay-500">
       <div
         ref={ref}
-        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white px-10 py-8 shadow-lg transition-all delay-500"
+        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white px-10 py-8 shadow-lg transition-all delay-500 dark:bg-gray-800"
       >
         <button
           onClick={() => {

@@ -7,7 +7,7 @@ import { z } from "zod";
 import { useNavigate } from "@tanstack/react-router";
 
 import { supabaseUrl } from "@/services/supabase";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/constants";
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/utils/constants";
 import { useUpdateUser } from "./useUpdateUser";
 
 import {
@@ -67,6 +67,7 @@ export const UpdateUserDataForm = () => {
     if (fullName === values.fullName && avatar === values.avatar) {
       return;
     }
+    console.log(values);
     updateUser(values);
   }
 
@@ -123,7 +124,8 @@ export const UpdateUserDataForm = () => {
               <FormLabel>Avatar</FormLabel>
               <FormControl>
                 <Input
-                  className="m-0 overflow-hidden border-none p-0 file:my-auto file:mt-0 file:rounded-md file:bg-primary file:px-3 file:py-2 file:text-white"
+                  // className="m-0 overflow-hidden border-none p-0 file:my-auto file:mt-0 file:rounded-md file:bg-primary file:px-3 file:py-2 file:text-white"
+                  className="m-0 overflow-hidden rounded-sm border-none p-0 file:my-auto file:mt-0 file:rounded-sm file:bg-primary file:px-3 file:py-2 file:text-white dark:file:text-black"
                   type="file"
                   accept="image/*"
                   disabled={isUpdating}

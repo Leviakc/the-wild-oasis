@@ -1,8 +1,9 @@
 import { Heading } from "@/components/Heading";
 import { Loader } from "@/components/Loader";
-import { fallbackPage } from "@/constants";
+
 import { LoginForm } from "@/features/authentication/LoginForm";
 import { userQueryOptions } from "@/services/apiAuth";
+import { fallbackPage } from "@/utils/constants";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/login")({
   ),
   component: () => (
     //   grid-template-columns: 48rem;
-    <main className="grid min-h-screen place-content-center content-center justify-center gap-8 bg-gray-50">
+    <main className="grid min-h-screen place-content-center content-center justify-center gap-8 bg-gray-50 dark:bg-gray-900">
       <img
         src="/logo-light.png"
         alt="Logo"
