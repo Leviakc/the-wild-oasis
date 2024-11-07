@@ -3,6 +3,7 @@ import {
   SortingState,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
   VisibilityState,
@@ -38,7 +39,7 @@ import {
 import { Menus } from "@/components/Menus";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 // import { useState } from "react";
 // import { Button } from "@/components/ui/button";
 
@@ -58,7 +59,10 @@ export const BookingTable = <TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) => {
-  const [currentStatus, setCurrentStatus] = useState("all");
+  const { status } = useSearch({ from: "/_auth/_layout/bookings/" });
+  const [currentStatus, setCurrentStatus] = useState<typeof status>(
+    status || "all",
+  );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const navigate = useNavigate();
@@ -69,6 +73,7 @@ export const BookingTable = <TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
@@ -94,8 +99,9 @@ export const BookingTable = <TData, TValue>({
                   ...prev,
                   status: value as BookingsStatusSearchOptions,
                 }),
+                replace: true,
               });
-              setCurrentStatus(value);
+              setCurrentStatus(value as typeof status);
             }}
           >
             <SelectTrigger className="ml-2 w-[180px]">
@@ -197,6 +203,24 @@ export const BookingTable = <TData, TValue>({
               </TableBody>
             </Table>
           </Menus>
+        </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
         </div>
       </div>
     </>
