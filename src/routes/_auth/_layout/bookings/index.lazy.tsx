@@ -6,6 +6,7 @@ import { createLazyFileRoute, useSearch } from "@tanstack/react-router";
 import { Heading } from "@/components/Heading";
 import { Loader } from "@/components/Loader";
 import { bookingsQueryOptions } from "@/features/bookings/bookingsQueryOptions";
+import { Button } from "@/components/ui/button";
 
 export const Route = createLazyFileRoute("/_auth/_layout/bookings/")({
   component: Bookings,
@@ -16,6 +17,13 @@ export const Route = createLazyFileRoute("/_auth/_layout/bookings/")({
       <>
         <p>Error!</p>
         <div>{error.message}</div>
+        <Button
+          onClick={() => {
+            window.location.replace("/");
+          }}
+        >
+          Retry
+        </Button>
       </>
     );
   },
