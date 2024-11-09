@@ -5,6 +5,7 @@ import React, {
   useState,
   useContext,
   ComponentProps,
+  useEffect,
 } from "react";
 import { createPortal } from "react-dom";
 
@@ -54,6 +55,18 @@ const Menu = ({ children }: { children: React.ReactNode }) => {
 
 const Toggle = ({ id }: { id: number }) => {
   const { openId, close, open, setPosition } = useContext(MenusContext);
+
+  useEffect(() => {
+    function handleScroll() {
+      if (openId) {
+        close();
+        document.removeEventListener("wheel", handleScroll);
+      }
+    }
+    if (openId) document.addEventListener("wheel", handleScroll);
+
+    return () => document.removeEventListener("wheel", handleScroll);
+  }, [openId, close]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     // This is so you can open the context menu
